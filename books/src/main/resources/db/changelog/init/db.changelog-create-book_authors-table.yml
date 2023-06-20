@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - preConditions:
+      - runningAs:
+          username: postgres
+
+  - changeSet:
+      id: 3
+      author: andrey
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: book_author
+
+      changes:
+        - createTable:
+            tableName: book_author
+            columns:
+              - column:
+                  name: book_id
+                  type: bigint
+              - column:
+                  name: author_id
+                  type: bigint
+        - addForeignKeyConstraint:
+            baseColumnNames: book_id
+            baseTableName: book_author
+            constraintName: fk_book_id
+            referencedColumnNames: id
+            referencedTableName: books
+            validate: true
+        - addForeignKeyConstraint:
+            baseColumnNames: author_id
+            baseTableName: book_author
+            constraintName: fk_author_id
+            referencedColumnNames: id
+            referencedTableName: authors
+            validate: true

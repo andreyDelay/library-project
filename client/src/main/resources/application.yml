@@ -1,0 +1,8 @@
+api:
+  url: http://localhost:9000/api/v1/books
+
+logging:
+  level:
+    andrey.library.client.feign.BookClient: DEBUG
+  file:
+    name: logs/client.log

@@ -1,0 +1,52 @@
+databaseChangeLog:
+  - preConditions:
+      - runningAs:
+          username: postgres
+
+  - changeSet:
+      id: 1
+      author: andrey
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: books
+
+      changes:
+        - createTable:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: title
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: quantity_in_stock
+                  type: smallint
+                  defaultValue: 1
+        - createIndex:
+            clustered: true
+            columns:
+              - column:
+                  descending: false
+                  name: title
+            indexName: book_title_index
+            schemaName: public
+            tableName: books
+            tablespace: pg_default
+            unique: true
+        - createSequence:
+            cacheSize: 381818
+            cycle: false
+            dataType: int
+            incrementBy: 1
+            schemaName: public
+            sequenceName: books_sequence
+            startValue: 1

@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/init/db.changelog-create-books-table.yml
+  - include:
+      file: db/changelog/init/db.changelog-create-authors-table.yml
+  - include:
+      file: db/changelog/init/db.changelog-create-book_authors-table.yml

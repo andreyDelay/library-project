@@ -1,0 +1,40 @@
+version: "3.9"
+services:
+  eureka:
+    build: ./eureka
+    restart: on-failure
+    ports:
+      - '8761:8761'
+  gateway:
+    build: ./gateway
+    restart: on-failure
+    ports:
+      - '9000:9000'
+    environment:
+      EUREKA_SERVER_ADDRESS: http://eureka:8761/eureka
+    depends_on:
+      - eureka
+      - books
+  books:
+    build: ./books
+    restart: on-failure
+    deploy:
+      replicas: 1
+    ports:
+      - '8081'
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_DB: books_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      EUREKA_SERVER_ADDRESS: http://eureka:8761/eureka
+    depends_on:
+      - db
+      - eureka
+  db:
+    image: postgres:14
+    restart: on-failure
+    environment:
+      POSTGRES_DB: books_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
