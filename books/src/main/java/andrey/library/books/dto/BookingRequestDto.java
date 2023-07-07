@@ -1,4 +1,4 @@
-package andrey.library.booking.dto;
+package andrey.library.books.dto;
 
 import lombok.AccessLevel;
 import lombok.Data;

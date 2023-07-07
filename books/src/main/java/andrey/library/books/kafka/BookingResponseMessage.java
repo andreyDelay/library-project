@@ -1,5 +1,15 @@
-package andrey.library.booking.kafka;
+package andrey.library.books.kafka;
 
-import andrey.library.booking.model.BookingStatus;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
-public record BookingResponseMessage(Long id, String borrowedQty, BookingStatus bookingStatus) {}
+@Data
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class BookingResponseMessage {
+    Long id;
+    Integer borrowedQty;
+    BookingStatus bookingStatus;
+}

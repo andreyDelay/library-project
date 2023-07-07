@@ -1,7 +1,7 @@
 package andrey.library.books.controller;
 
 import andrey.library.books.dto.BookDto;
-import andrey.library.books.service.BookServiceImpl;
+import andrey.library.books.service.BookService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AccessLevel;
@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.*;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BooksController {
 
-    BookServiceImpl bookService;
-    final String bookTitleRegExpPattern = "(\\w+\\D+\\d+)+";
+    BookService bookService;
+    final String bookTitleRegExpPattern = "^(\\w*\\W*)$";
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
