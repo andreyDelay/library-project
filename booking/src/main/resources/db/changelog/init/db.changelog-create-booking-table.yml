@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - preConditions:
+      - runningAs:
+          username: postgres
+
+
+  - changeSet:
+      id: 1
+      author: andrey
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: bookings
+
+      changes:
+        - createTable:
+            tableName: bookings
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: title
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: borrowed_qty
+                  type: smallint
+              - column:
+                  name: status
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: client_id
+                  type: bigint
+        - addForeignKeyConstraint:
+            baseColumnNames: client_id
+            baseTableName: bookings
+            constraintName: fk_booking_client
+            referencedColumnNames: id
+            referencedTableName: clients
+            validate: true
+        - createSequence:
+            cacheSize: 381818
+            cycle: false
+            dataType: int
+            incrementBy: 1
+            schemaName: public
+            sequenceName: bookings_sequence
+            startValue: 1
