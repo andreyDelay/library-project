@@ -1,5 +1,8 @@
 api:
-  url: http://localhost:9000/api/v1/books
+  url:
+#    books: http://localhost:8081/api/v1/books
+    books: http://localhost:9000/api/v1/books
+    booking: http://localhost:9000/api/v1/booking/book
 
 logging:
   level:
