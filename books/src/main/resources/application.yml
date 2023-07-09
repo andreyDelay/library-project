@@ -1,42 +1,44 @@
 server:
-    port: 8081
-    servlet:
-        context-path: /api/v1
+  port: 8081
+  servlet:
+    context-path: /api/v1
 
 spring:
-    application:
-        name: book-service
-    datasource:
-        url: jdbc:postgresql://${POSTGRES_HOST}/${POSTGRES_DB}
-        username: ${POSTGRES_USER}
-        password: ${POSTGRES_PASSWORD}
-        hikari:
-            maximumPoolSize: 5
-            poolName: bs-pool
-    jpa:
-        properties:
-            hibernate:
-                show_sql: true
-                format_sql: true
-    liquibase:
-        change-log: classpath:db/changelog/db.changelog-master.yml
-    kafka:
-        consumer:
-            group-id: "book-service"
-            client-id: "booking-request-consumer"
-            bootstrap-servers: ${BROKER_SERVER}
-        producer:
-            bootstrap-servers: ${BROKER_SERVER}
-            client-id: "booking-response-producer"
+  application:
+    name: book-service
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST}/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    hikari:
+      maximumPoolSize: 5
+      poolName: bs-pool
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yml
+  kafka:
+    consumer:
+      group-id: "book-service"
+      client-id: "booking-request-consumer"
+      bootstrap-servers: ${BROKER_SERVER}
+    producer:
+      bootstrap-servers: ${BROKER_SERVER}
+      client-id: "booking-response-producer"
 
 eureka:
-    client:
-        registerWithEureka: true
-        serviceUrl:
-            defaultZone: ${EUREKA_SERVER_ADDRESS}
+  client:
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER_ADDRESS}
 
-application:
-    kafka:
-        topic:
-            request: "booking-requests"
-            response: "booking-responses"
+app:
+  kafka:
+    producer:
+      topic: "booking-status"
+      partitions: 3
+    consumer:
+      topic: "booking-library-book"

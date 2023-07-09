@@ -9,6 +9,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>booking</module>
         <module>books</module>
         <module>eureka</module>
         <module>gateway</module>
