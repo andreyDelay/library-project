@@ -1,4 +1,4 @@
-package andrey.library.booking.config;
+package andrey.library.books.config;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;

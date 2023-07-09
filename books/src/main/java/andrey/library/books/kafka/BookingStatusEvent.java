@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @Data
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BookingResponseMessage {
+public class BookingStatusEvent {
     Long id;
     Integer borrowedQty;
     BookingStatus bookingStatus;

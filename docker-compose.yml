@@ -5,36 +5,93 @@ services:
     restart: on-failure
     ports:
       - '8761:8761'
+
   gateway:
     build: ./gateway
     restart: on-failure
     ports:
       - '9000:9000'
     environment:
-      EUREKA_SERVER_ADDRESS: http://eureka:8761/eureka
+      EUREKA_SERVER_ADDRESS: 'http://eureka:8761/eureka'
     depends_on:
-      - eureka
+      - booking
       - books
+      - eureka
+
+  booking:
+    build: ./booking
+    restart: on-failure
+    deploy:
+      replicas: 3
+    ports:
+      - '8082'
+    environment:
+      POSTGRES_HOST: booking-db
+      POSTGRES_DB: booking_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      EUREKA_SERVER_ADDRESS: 'http://eureka:8761/eureka'
+      BROKER_SERVER: 'broker:29092'
+    depends_on:
+      - booking-db
+      - eureka
+      - broker
+
   books:
     build: ./books
     restart: on-failure
     deploy:
-      replicas: 1
+      replicas: 3
     ports:
       - '8081'
     environment:
-      POSTGRES_HOST: db
+      POSTGRES_HOST: books-db
       POSTGRES_DB: books_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      EUREKA_SERVER_ADDRESS: http://eureka:8761/eureka
+      EUREKA_SERVER_ADDRESS: 'http://eureka:8761/eureka'
+      BROKER_SERVER: 'broker:29092'
     depends_on:
-      - db
+      - books-db
       - eureka
-  db:
+      - broker
+
+  books-db:
     image: postgres:14
     restart: on-failure
     environment:
       POSTGRES_DB: books_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+
+  booking-db:
+    image: postgres:14
+    restart: on-failure
+    environment:
+      POSTGRES_DB: booking_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  broker:
+    image: confluentinc/cp-kafka:latest
+    container_name: broker
+    ports:
+      - '9092:9092'
+      - '9093:9093'
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1

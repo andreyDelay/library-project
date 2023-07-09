@@ -36,7 +36,7 @@ public class KafkaProducerConfig {
 
     @Bean
     public NewTopic producerTopic() {
-        return TopicBuilder.name(kafkaClientProperties.getBookingTopic())
+        return TopicBuilder.name(kafkaClientProperties.getBookingProducerTopic())
                 .partitions(kafkaClientProperties.getBookingTopicPartitions())
                 .build();
     }
@@ -54,5 +54,4 @@ public class KafkaProducerConfig {
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
         return new DefaultKafkaProducerFactory<>(props, new StringSerializer(), new JsonSerializer<>());
     }
-
 }

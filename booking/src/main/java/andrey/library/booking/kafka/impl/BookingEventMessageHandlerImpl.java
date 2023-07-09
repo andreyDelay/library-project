@@ -27,7 +27,7 @@ public class BookingEventMessageHandlerImpl implements BookingEventMessageHandle
     @Override
     public void sendBookingEventMessage(BookingEvent bookingEvent) {
         try {
-            kafkaTemplate.send(kafkaClientProperties.getBookingTopic(), bookingEvent)
+            kafkaTemplate.send(kafkaClientProperties.getBookingProducerTopic(), bookingEvent)
                 .whenComplete(
                     (result, ex) -> {
                         if (Objects.isNull(ex)) {

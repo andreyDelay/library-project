@@ -4,6 +4,10 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: booking-service
+          uri: lb://booking-service
+          predicates:
+            - Path=/api/v1/booking/**
         - id: book-service
           uri: lb://book-service
           predicates:
