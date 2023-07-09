@@ -26,7 +26,7 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     BookingStatus bookingStatus;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     Client client;
 

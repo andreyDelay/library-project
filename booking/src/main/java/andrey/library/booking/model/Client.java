@@ -3,12 +3,7 @@ package andrey.library.booking.model;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import lombok.experimental.FieldDefaults;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @Entity
@@ -23,9 +18,4 @@ public class Client {
 
     @Column(name = "account")
     String account;
-
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "client")
-    private Set<Booking> books = new HashSet<>();
 }
