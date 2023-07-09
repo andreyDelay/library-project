@@ -24,17 +24,11 @@ spring:
     consumer:
       group-id: "booking-service"
       client-id: "booking-response-consumer"
+    producer-topic-name: "booking-library-book"
+    consumer-topic-name: "booking-status"
 
 eureka:
   client:
     registerWithEureka: true
     serviceUrl:
       defaultZone: ${EUREKA_SERVER_ADDRESS}
-
-app:
-  kafka:
-    producer:
-      topic: "booking-library-book"
-      partitions: 3
-    consumer:
-      topic: "booking-status"

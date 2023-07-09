@@ -1,22 +1,17 @@
 package andrey.library.books.config;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Getter
+@Setter
 @Configuration
-@ConfigurationProperties(prefix = "app.kafka")
+@ConfigurationProperties(prefix = "spring.kafka")
 public class KafkaClientProperties {
 
-    @Value("${producer.topic}")
-    private String bookingProducerTopic;
+    private String producerTopicName;
 
-    @Value("${consumer.topic}")
-    private String bookingConsumerTopic;
-
-    @Value("${producer.partitions}")
-    private Integer bookingTopicPartitions;
-
+    private String consumerTopicName;
 }

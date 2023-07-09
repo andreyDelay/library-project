@@ -36,8 +36,8 @@ public class KafkaProducerConfig {
 
     @Bean
     public NewTopic producerTopic() {
-        return TopicBuilder.name(kafkaClientProperties.getBookingProducerTopic())
-                .partitions(kafkaClientProperties.getBookingTopicPartitions())
+        return TopicBuilder.name(kafkaClientProperties.getProducerTopicName())
+                .partitions(3)
                 .build();
     }
 

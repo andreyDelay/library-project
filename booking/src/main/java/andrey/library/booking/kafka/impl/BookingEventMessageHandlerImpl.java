@@ -27,7 +27,7 @@ public class BookingEventMessageHandlerImpl implements BookingEventMessageHandle
     @Override
     public void sendBookingEventMessage(BookingEvent bookingEvent) {
         try {
-            kafkaTemplate.send(kafkaClientProperties.getBookingProducerTopic(), bookingEvent)
+            kafkaTemplate.send(kafkaClientProperties.getProducerTopicName(), bookingEvent)
                 .whenComplete(
                     (result, ex) -> {
                         if (Objects.isNull(ex)) {
@@ -43,7 +43,7 @@ public class BookingEventMessageHandlerImpl implements BookingEventMessageHandle
 
     @Override
     @Transactional
-    @KafkaListener(topics = "${app.kafka.consumer.topic}")
+    @KafkaListener(topics = "${spring.kafka.consumer-topic-name}")
     public void consumeBookingStatus(BookingStatusEvent bookingStatusEvent) {
             log.info("Receiving booking status for a booking id: {}.", bookingStatusEvent.id());
             bookingRepository.findById(bookingStatusEvent.id())
