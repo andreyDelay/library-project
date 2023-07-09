@@ -3,6 +3,7 @@ package andrey.library.booking.controller;
 import andrey.library.booking.dto.BookingRequestDto;
 import andrey.library.booking.dto.BookingResponseDto;
 import andrey.library.booking.service.BookingService;
+import jakarta.validation.constraints.Positive;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("/booking/book")
+@RequestMapping("/bookings")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BookingController {
@@ -27,7 +28,7 @@ public class BookingController {
     }
 
     @GetMapping("/{bookingId}")
-    public BookingResponseDto bookingStatus(@PathVariable Long bookingId) {
+    public BookingResponseDto bookingStatus(@PathVariable @Positive Long bookingId) {
         log.info("Accepting GET HTTP request into Controller class, to get actual booking status.");
         return bookingService.getBookingStatus(bookingId);
     }

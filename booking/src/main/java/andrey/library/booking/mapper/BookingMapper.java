@@ -2,7 +2,7 @@ package andrey.library.booking.mapper;
 
 import andrey.library.booking.dto.BookingRequestDto;
 import andrey.library.booking.dto.BookingResponseDto;
-import andrey.library.booking.kafka.BookingRequestMessage;
+import andrey.library.booking.kafka.BookingEvent;
 import andrey.library.booking.model.Booking;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
@@ -22,5 +22,5 @@ public interface BookingMapper {
     BookingResponseDto toBookingResponse(Booking booking);
 
     @Mapping(target = "desiredQuantity", source = "borrowedQty")
-    BookingRequestMessage toBookingRequestMessage(Booking booking);
+    BookingEvent toBookingRequestMessage(Booking booking);
 }

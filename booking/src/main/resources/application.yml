@@ -18,13 +18,12 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yml
   kafka:
+    bootstrap-servers: ${BROKER_SERVER}
     producer:
-      bootstrap-servers: ${BROKER_SERVER}
       client-id: "booking-request-producer"
     consumer:
       group-id: "booking-service"
       client-id: "booking-response-consumer"
-      bootstrap-servers: ${BROKER_SERVER}
 
 eureka:
   client:
@@ -32,8 +31,10 @@ eureka:
     serviceUrl:
       defaultZone: ${EUREKA_SERVER_ADDRESS}
 
-application:
+app:
   kafka:
-    topic:
-      request: "booking-requests"
-      response: "booking-responses"
+    producer:
+      topic: "booking-library-book"
+      partitions: 3
+    consumer:
+      topic: "booking-status"
