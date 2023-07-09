@@ -43,7 +43,7 @@ public class BookingEventMessageHandlerImpl implements BookingEventMessageHandle
 
     @Override
     @Transactional
-    @KafkaListener(topics = "${spring.kafka.consumer-topic-name}")
+    @KafkaListener(topics = "${spring.kafka.consumer-topic-name}", containerFactory = "listenerContainerFactory")
     public void consumeBookingStatus(BookingStatusEvent bookingStatusEvent) {
             log.info("Receiving booking status for a booking id: {}.", bookingStatusEvent.id());
             bookingRepository.findById(bookingStatusEvent.id())

@@ -7,7 +7,7 @@ spring:
         - id: booking-service
           uri: lb://booking-service
           predicates:
-            - Path=/api/v1/booking/**
+            - Path=/api/v1/bookings/**
         - id: book-service
           uri: lb://book-service
           predicates:

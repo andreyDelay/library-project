@@ -50,7 +50,7 @@ public class BookingServiceImpl implements BookingService {
         log.info("Fetching actual booking status. Booking id: {}.", bookingId);
         Booking targetBooking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new BookingNotFoundException(
-                        String.format("Booking with id {} not found.", bookingId)));
+                        String.format("Booking with id %s not found.", bookingId)));
 
         return bookingMapper.toBookingResponse(targetBooking);
     }

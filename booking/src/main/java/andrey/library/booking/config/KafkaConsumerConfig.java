@@ -23,6 +23,8 @@ public class KafkaConsumerConfig {
     public ConsumerFactory<String, BookingStatusEvent> consumerFactory() {
         var props = kafkaProperties.buildConsumerProperties();
         props.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaProperties.getConsumer().getGroupId());
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
 
         StringDeserializer keyDeserializer = new StringDeserializer();
         JsonDeserializer<BookingStatusEvent> valueDeserializer =
