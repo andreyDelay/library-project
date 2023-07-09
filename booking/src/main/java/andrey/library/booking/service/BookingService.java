@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface BookingService {
     BookingResponseDto borrowBook(BookingRequestDto bookingRequest);
+
     BookingResponseDto getBookingStatus(Long bookingId);
 }
