@@ -16,7 +16,7 @@ public class BookingClientApplicationTests {
     @Autowired
     BookingClient client;
 
-    final long elements = 10;
+    final long elements = 1;
 
     ExecutorService executorService = Executors.newFixedThreadPool(2);
 

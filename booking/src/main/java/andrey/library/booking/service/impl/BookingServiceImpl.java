@@ -29,15 +29,16 @@ public class BookingServiceImpl implements BookingService {
     BookingRepository bookingRepository;
     BookingEventMessageHandler bookingRequestSender;
 
-
     @Override
     @Transactional
     public BookingResponseDto borrowBook(BookingRequestDto bookingRequest) {
         log.info("Processing booking request into booking-service borrowBook() method. "
-                        + "Target book tittle: {}", bookingRequest.getBookTitle());
+                + "Target book tittle: {}", bookingRequest.getBookTitle());
+
         Booking booking = bookingMapper.toBooking(bookingRequest);
         clientRepository.findByAccount(booking.getClient().getAccount()).ifPresent(booking::setClient);
         booking.setBookingStatus(BookingStatus.CREATED);
+
         log.info("Setting status CREATED and saving booking entity to a database.");
         Booking savedBooking = bookingRepository.save(booking);
 

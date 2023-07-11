@@ -4,7 +4,6 @@ import andrey.library.books.kafka.BookingStatusEvent;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
@@ -51,7 +50,7 @@ public class KafkaProducerConfig {
         var props = kafkaProperties.buildProducerProperties();
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
+        props.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "booking-trx-");
         return new DefaultKafkaProducerFactory<>(props, new StringSerializer(), new JsonSerializer<>());
     }
 }

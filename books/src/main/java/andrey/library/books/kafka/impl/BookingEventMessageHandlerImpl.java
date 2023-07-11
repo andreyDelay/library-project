@@ -47,7 +47,7 @@ public class BookingEventMessageHandlerImpl implements BookingEventMessageHandle
     @Override
     @Transactional
     @KafkaListener(topics = "${spring.kafka.consumer-topic-name}", containerFactory = "listenerContainerFactory")
-    public void consumeBooking(BookingEvent bookingEvent) {
+    public void consumeBookingEvent(BookingEvent bookingEvent) {
         log.info("Accepting booking event a book: {}.", bookingEvent.title());
         BookingStatusEvent bookingResponseMessage = BookingStatusEvent.builder()
                 .bookingStatus(BookingStatus.ERROR)

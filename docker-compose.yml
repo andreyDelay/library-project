@@ -22,7 +22,7 @@ services:
     build: ./booking
     restart: on-failure
     deploy:
-      replicas: 1
+      replicas: 2
     ports:
       - '8082'
     environment:
@@ -41,7 +41,7 @@ services:
     build: ./books
     restart: on-failure
     deploy:
-      replicas: 1
+      replicas: 2
     ports:
       - '8081'
     environment:
@@ -67,6 +67,8 @@ services:
   booking-db:
     image: postgres:14
     restart: on-failure
+    ports:
+      - '5432:5432'
     environment:
       POSTGRES_DB: booking_db
       POSTGRES_USER: postgres

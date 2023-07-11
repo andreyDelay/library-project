@@ -29,5 +29,4 @@ public class Booking {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     Client client;
-
 }
