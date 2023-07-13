@@ -16,9 +16,9 @@ public class BookingClientApplicationTests {
     @Autowired
     BookingClient client;
 
-    final long elements = 1;
+    final long elements = 10;
 
-    ExecutorService executorService = Executors.newFixedThreadPool(2);
+    ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     Random random = new Random();
 

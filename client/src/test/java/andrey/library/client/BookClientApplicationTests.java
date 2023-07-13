@@ -18,9 +18,9 @@ class BookClientApplicationTests {
     @Autowired
     BookClient client;
 
-    final long elements = 2;
+    final long elements = 100;
 
-    ExecutorService executorService = Executors.newFixedThreadPool(2);
+    ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     Random random = new Random();
 

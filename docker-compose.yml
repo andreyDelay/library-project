@@ -22,7 +22,7 @@ services:
     build: ./booking
     restart: on-failure
     deploy:
-      replicas: 2
+      replicas: 3
     ports:
       - '8082'
     environment:
@@ -41,7 +41,7 @@ services:
     build: ./books
     restart: on-failure
     deploy:
-      replicas: 2
+      replicas: 3
     ports:
       - '8081'
     environment:
@@ -77,6 +77,8 @@ services:
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     container_name: zookeeper
+    ports:
+      - '2181:2181'
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000

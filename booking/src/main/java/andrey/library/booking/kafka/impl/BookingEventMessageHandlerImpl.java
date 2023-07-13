@@ -48,6 +48,9 @@ public class BookingEventMessageHandlerImpl implements BookingEventMessageHandle
             log.info("Receiving booking status for a booking id: {}.", bookingStatusEvent.id());
             bookingRepository.findById(bookingStatusEvent.id())
                     .ifPresent(booking -> {
+                        if (booking.getBookingStatus().equals(BookingStatus.ACTIVE)) {
+                            booking.setBorrowedQty(booking.getBorrowedQty() + bookingStatusEvent.borrowedQty());
+                        }
                         booking.setBookingStatus(BookingStatus.ACTIVE);
                         bookingRepository.save(booking);
                     });

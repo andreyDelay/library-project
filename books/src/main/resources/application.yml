@@ -24,9 +24,9 @@ spring:
     bootstrap-servers: ${BROKER_SERVER}
     consumer:
       group-id: "book-service"
-      client-id: "booking-request-consumer"
+      client-id: "booking-consumer"
     producer:
-      client-id: "booking-response-producer"
+      client-id: "booking-status-producer"
     producer-topic-name: "booking-status"
     consumer-topic-name: "booking-library-book"
 

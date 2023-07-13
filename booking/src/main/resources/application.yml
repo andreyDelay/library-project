@@ -20,10 +20,10 @@ spring:
   kafka:
     bootstrap-servers: ${BROKER_SERVER}
     producer:
-      client-id: "booking-request-producer"
+      client-id: "booking-producer"
     consumer:
       group-id: "booking-service"
-      client-id: "booking-response-consumer"
+      client-id: "booking-status-consumer"
     producer-topic-name: "booking-library-book"
     consumer-topic-name: "booking-status"
 
