@@ -5,6 +5,7 @@ import andrey.library.books.kafka.BookingEvent;
 import andrey.library.books.kafka.BookingEventMessageHandler;
 import andrey.library.books.kafka.BookingStatus;
 import andrey.library.books.kafka.BookingStatusEvent;
+import andrey.library.books.model.Book;
 import andrey.library.books.repository.BooksRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,16 +54,19 @@ public class BookingEventMessageHandlerImpl implements BookingEventMessageHandle
                 .bookingStatus(BookingStatus.ERROR)
                 .id(bookingEvent.id())
                 .build();
+
         booksRepository.findByTitle(bookingEvent.title())
                 .ifPresent(book -> {
                     int actualQuantityInStock = book.getQuantityInStock();
                     int desiredBooksQuantity = bookingEvent.desiredQuantity();
                     int decreasedStock = actualQuantityInStock - desiredBooksQuantity;
                     if (decreasedStock >= 0) {
-                        bookingResponseMessage.setBorrowedQty(bookingEvent.desiredQuantity());
-                        bookingResponseMessage.setBookingStatus(BookingStatus.ACTIVE);
                         book.setQuantityInStock(decreasedStock);
-                        booksRepository.save(book);
+                        Book savedBook = booksRepository.save(book);
+                        if (Objects.nonNull(savedBook)) {
+                            bookingResponseMessage.setBorrowedQty(bookingEvent.desiredQuantity());
+                            bookingResponseMessage.setBookingStatus(BookingStatus.ACTIVE);
+                        }
                     }
                 });
         log.info("Booking event processed.");

@@ -18,7 +18,7 @@ class BookClientApplicationTests {
     @Autowired
     BookClient client;
 
-    final long elements = 100;
+    final long elements = 10_000;
 
     ExecutorService executorService = Executors.newFixedThreadPool(10);
 

@@ -37,7 +37,7 @@ public class KafkaProducerConfig {
     @Bean
     public NewTopic producerTopic() {
         return TopicBuilder.name(kafkaClientProperties.getProducerTopicName())
-                .partitions(1)
+                .partitions(5)
                 .build();
     }
 
@@ -51,7 +51,7 @@ public class KafkaProducerConfig {
         var props = kafkaProperties.buildProducerProperties();
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        props.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, UUID.randomUUID().toString()); //UUID.randomUUID().toString()
+        props.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, UUID.randomUUID().toString());
         props.put(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, 1);
         props.put(ProducerConfig.ACKS_CONFIG, "all");
         props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true);

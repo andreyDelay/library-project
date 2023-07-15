@@ -51,7 +51,7 @@ public class BookingEventMessageHandlerImpl implements BookingEventMessageHandle
                         if (booking.getBookingStatus().equals(BookingStatus.ACTIVE)) {
                             booking.setBorrowedQty(booking.getBorrowedQty() + bookingStatusEvent.borrowedQty());
                         }
-                        booking.setBookingStatus(BookingStatus.ACTIVE);
+                        booking.setBookingStatus(bookingStatusEvent.bookingStatus());
                         bookingRepository.save(booking);
                     });
             log.info("Booking status processed.");
