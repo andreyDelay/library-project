@@ -27,17 +27,17 @@ import java.util.stream.Collectors;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BookServiceImpl implements BookService {
 
-    BooksRepository booksRepository;
     MapStructBookMapper bookMapper;
+    BooksRepository booksRepository;
     AuthorRepository authorRepository;
 
     @Override
-    @Transactional
     @Retryable
+    @Transactional
     public BookDto save(BookDto bookDto) {
         booksRepository.findByTitle(bookDto.getTitle()).ifPresent(book -> {
             log.error("Error during saving new Book object. Book with title: \"{}\" already exists.",
-                        bookDto.getTitle());
+                    bookDto.getTitle());
             throw new BookAlreadyExistsException(
                     String.format("Book title already exists. Title: %s", bookDto.getTitle()));
         });
@@ -55,15 +55,15 @@ public class BookServiceImpl implements BookService {
         bookToSave.setAuthors(existingAuthors);
         log.info("Saving book into repository. Book object: {}.", bookToSave);
         return Optional.ofNullable(bookMapper.fromBook(booksRepository.save(bookToSave)))
-                        .orElseThrow(() -> new RuntimeException("Couldn't save book in repository."));
+                .orElseThrow(() -> new RuntimeException("Couldn't save book in repository."));
     }
 
     @Override
     public BookDto findByTitle(String title) {
         log.info("Fetching book from repository by title: {}", title);
         return bookMapper.fromBook(booksRepository.findByTitle(title)
-                        .orElseThrow(() -> new BookNotFoundException(
-                                String.format("Book with title %s not found", title))));
+                .orElseThrow(() -> new BookNotFoundException(
+                        String.format("Book with title %s not found", title))));
     }
 
     @Override

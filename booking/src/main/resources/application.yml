@@ -1,0 +1,34 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /api/v1
+
+spring:
+  application:
+    name: booking-service
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST}/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format-sql: true
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yml
+  kafka:
+    bootstrap-servers: ${BROKER_SERVER}
+    producer:
+      client-id: "booking-producer"
+    consumer:
+      group-id: "booking-service"
+      client-id: "booking-status-consumer"
+    producer-topic-name: "booking-library-book"
+    consumer-topic-name: "booking-status"
+
+eureka:
+  client:
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER_ADDRESS}
